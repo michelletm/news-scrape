@@ -4,9 +4,13 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+//mongoose connection 
 
+var indexRouter = require('./routes/index');
+var articlesRouter = require('./routes/articles');
+
+connection = require("./config/connection");
+//var Article = require("./models/article");
 var app = express();
 
 // view engine setup
@@ -20,14 +24,26 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/articles', articlesRouter);
 
-// catch 404 and forward to error handler
+app.get("/test", async function(req, res){
+  
+  var article = new Article({title: "title", href: "href"})
+  
+  try {
+    await article.save();
+    res.send("Success")
+  } catch(e) {
+    res.send(e);
+  }
+
+})
+
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
+
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
