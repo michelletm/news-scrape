@@ -4,8 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-//mongoose connection 
-
 var indexRouter = require('./routes/index');
 var articlesRouter = require('./routes/articles');
 
@@ -38,6 +36,7 @@ app.get("/test", async function(req, res){
   }
 
 })
+
 
 app.use(function(req, res, next) {
   next(createError(404));

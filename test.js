@@ -1,35 +1,37 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
 
-let $;
+console.log(axios)
 
-axios.get("https://www.nytimes.com/section/us")
-   .then(function(response){
-      //console.log(response.data);
-      //console.log(Object.keys(response));
-      $ = cheerio.load(response.data);
+//let $;
 
-      const element = $(`#stream-panel > div > ol > li`)
+// axios.get("https://www.nytimes.com/section/us")
+//    .then(function(response){
+//       //console.log(response.data);
+//       //console.log(Object.keys(response));
+//       $ = cheerio.load(response.data);
 
-      let text;
-      for(let i=1; i <= element.length; i++) {
-         text = $(`#stream-panel > div > ol > li:nth-child(${i}) > div > div.css-4jyr1y > a > h2`).text()
-         console.log(text)
-         const href = $(`#stream-panel > div > ol > li:nth-child(${i}) a`).attr("href");
-         console.log(href);
-         const title = $(`#stream-panel > div > ol > li:nth-child(${i}) h2`).text();
-         const summary = $(`#stream-panel > div > ol > li:nth-child(${i}) p`).text();
+//       const element = $(`#stream-panel > div > ol > li`)
 
-         console.log(title);
-         console.log(summary);
-         console.log(href);
+//       let text;
+//       for(let i=1; i <= element.length; i++) {
+//          text = $(`#stream-panel > div > ol > li:nth-child(${i}) > div > div.css-4jyr1y > a > h2`).text()
+//          console.log(text)
+//          const href = $(`#stream-panel > div > ol > li:nth-child(${i}) a`).attr("href");
+//          console.log(href);
+//          const title = $(`#stream-panel > div > ol > li:nth-child(${i}) h2`).text();
+//          const summary = $(`#stream-panel > div > ol > li:nth-child(${i}) p`).text();
 
-         // text = $("#stream-panel > div.css-13mho3u > ol > li:nth-child(1) > div > div.css-4jyr1y > a > h2").text();
-         // console.log(text);
-         // text = $("#stream-panel > div.css-13mho3u > ol > li:nth-child(2) > div > div.css-4jyr1y > a > h2").text()
-         // console.log(text);
-      }
-   })
-   .catch(function(error){
-      console.log(error);
-   })
+//          console.log(title);
+//          console.log(summary);
+//          console.log(href);
+
+//          // text = $("#stream-panel > div.css-13mho3u > ol > li:nth-child(1) > div > div.css-4jyr1y > a > h2").text();
+//          // console.log(text);
+//          // text = $("#stream-panel > div.css-13mho3u > ol > li:nth-child(2) > div > div.css-4jyr1y > a > h2").text()
+//          // console.log(text);
+//       }
+//    })
+//    .catch(function(error){
+//       console.log(error);
+//    })

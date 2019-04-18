@@ -1,2 +1,64 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<p id="title">{{title}}</p>
+<p id="secondTitle">Welcome to {{title}}</p>
+
+<header>
+   <div class="headerBox">
+   </div>
+</header>
+
+
+<button id="scrape">Scrape New Articles</button><br><br><br>
+
+<div id="articleBox">
+   <div>
+{{#each articles}}
+  <p>{{@index}}. <b>{{this.title}}</b> {{this._id}}</p>
+  <a href="/articles/saveArticle/{{this._id}}">Save This Article</a><br><br><br>
+{{/each}}
+</div>
+
+<div id="saveModal" class="modal">
+   <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="modavel-body">
+         <h2 id="titlePopUp"></h2>
+         <h2 id="hrefPopUp" href=""></h2>   
+      </div>
+   </div>
+</div>
+
+   
+</div>
+
+<script>
+
+$("#scrape").on("click", function() {
+   //event.preventDefault();
+
+   var dataQuery = "/articles/all"
+
+   $.ajax({
+      url: dataQuery,
+      method: "GET",
+      data: {
+         title: title,
+         summary: summary,
+         href: href
+      }
+   }).then(function(response){
+      console.log(response);
+      
+      $("#articleBox").text(response);
+      
+
+   });
+
+
+});
+
+$("a").on("click", function(event){
+   
+});
+
+
+</script>

@@ -15,11 +15,13 @@ var ArticleSchema = new Schema({
   
   href: {
     type: String,
-    required: true
+    required: true,
+    unique: true,
+    dropDupes: true
   }
 
 });
 
-var Article = mongoose.model("Article", ArticleSchema);
+var SavedArticles = mongoose.model("SavedArticles", ArticleSchema);
 
-module.exports = Article;
+module.exports = SavedArticles;

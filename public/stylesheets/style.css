@@ -1,8 +1,63 @@
 body {
+  background-color:rgb(215, 215, 215);
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px;
+  font-family: 'Special Elite', cursive;
 }
 
 a {
-  color: #00B7FF;
+  color: rgb(84, 84, 250);
 }
+
+#title, #secondTitle {
+  font-size: 32px;
+  text-align: center;
+  font-family: 'Special Elite', cursive;
+}
+
+#scrape {
+  font-family: 'Special Elite', cursive;
+  font-size: 19px;
+  padding: 10px;
+  
+}
+
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%;
+  overflow: auto; 
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; 
+  padding: 20px;
+  border: 1px solid #888;
+  width: 25%; 
+  font-family: 'Special Elite', cursive;
+  font-size: 20px;
+  text-align: center;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+  font-family: 'Special Elite', cursive;
+}
+
