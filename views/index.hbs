@@ -1,19 +1,19 @@
-<p id="title">{{title}}</p>
-<p id="secondTitle">Welcome to {{title}}</p>
+<p id="title">New York Times Scraper</p><br><br>
 
-<header>
+
+{{!-- <header>
    <div class="headerBox">
    </div>
-</header>
+</header> --}}
 
-
-<button id="scrape">Scrape New Articles</button><br><br><br>
 
 <div id="articleBox">
    <div>
 {{#each articles}}
   <p>{{@index}}. <b>{{this.title}}</b> {{this._id}}</p>
-  <a href="/articles/saveArticle/{{this._id}}">Save This Article</a><br><br><br>
+   <button class="save{{this._id}}" id="saveArticle">Save This Article</button>
+  {{!-- <a href="/articles/saveArticle/{{this._id}}">Save This Article</a><br><br><br> --}}
+  <button class="commentOn{{this._id}}" id="commentOn">Comment</button><br><br>
 {{/each}}
 </div>
 
@@ -21,8 +21,22 @@
    <div class="modal-content">
       <span class="close">&times;</span>
       <div class="modavel-body">
-         <h2 id="titlePopUp"></h2>
-         <h2 id="hrefPopUp" href=""></h2>   
+         <h2 id="titlePopUp">{{this.title}}</h2>
+         <h2 id="hrefPopUp" href={{this.href}}>{{this.href}}</h2> 
+         <h2 id="saved">Article Saved!</h2>
+      </div>
+   </div>
+</div>
+
+<div id="commentModal" class="modal">
+   <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="modavel-body">
+         <h2 id="titlePopUp">{{this.title}}</h2>
+         <h2 id="hrefPopUp" href={{this.href}}>{{this.href}}</h2> 
+         <h2 id="saved">Leave Comment</h2>
+         <input type="text" id="commentText"></input>
+         <button class="submit">Submit</button>
       </div>
    </div>
 </div>
@@ -32,33 +46,33 @@
 
 <script>
 
-$("#scrape").on("click", function() {
-   //event.preventDefault();
 
-   var dataQuery = "/articles/all"
 
-   $.ajax({
-      url: dataQuery,
-      method: "GET",
-      data: {
-         title: title,
-         summary: summary,
-         href: href
-      }
-   }).then(function(response){
-      console.log(response);
-      
-      $("#articleBox").text(response);
-      
 
+$("#saveArticle").on("click", function(event){
+       $("#saveModal").show();
+
+       $("span").on("click", function(event){
+         $("#saveModal").hide();
    });
-
-
 });
 
-$("a").on("click", function(event){
+
+
+$("#commentOn").on("click", function(event){
+   $("#commentModal").show();
+
+   $(".submit").on("click", function(event){
+      $("#commentText").val()
+   })
    
+   $("span").on("click", function(event){
+         $("#commentModal").hide();
+   });
 });
+   
+
+   
 
 
 </script>

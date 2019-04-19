@@ -61,9 +61,3 @@ exports.scrapeArticles = async function (req, res) {
       res.send(e)
    }
 }
-
-// module.exports = {
-//    all,
-//    addArticle,
-//    scrapeArticles
-// }
