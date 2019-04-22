@@ -18,6 +18,11 @@ var ArticleSchema = new Schema({
     required: true
   },
 
+  comments: {
+    type: [String],
+    default: undefined
+  },
+
   date: {
     type : Date, 
     default: Date.now 

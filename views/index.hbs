@@ -13,16 +13,16 @@
    <div>
 {{#each articles}}
   <p>{{@index}}. <b>{{this.title}}</b> {{this._id}}</p>
-   <button class="save{{this._id}}" id="saveArticle">Save This Article</button>
+   <button data-id="{{this._id}}" class="saveArticle">Save This Article</button>
   {{!-- <a href="/articles/saveArticle/{{this._id}}">Save This Article</a><br><br><br> --}}
-  <button class="commentOn{{this._id}}" id="commentOn">Comment</button>
-  <button class="readComments{{this._id}}" id="readComments">ReadComments</button><br><br>
+  <button data-id="{{this._id}}" class="commentOn">Comment</button>
+  <button id="readComments{{this._id}}" class="readComments">ReadComments</button><br><br>
 {{/each}}
 </div>
 
 <div id="saveModal" class="modal">
    <div class="modal-content">
-      <span class="close">&times;</span>
+      <span id="closeArticle">&times;</span>
       <div class="modavel-body">
          <h2 id="titlePopUp">{{this.title}}</h2>
          <h2 id="hrefPopUp" href={{this.href}}>{{this.href}}</h2> 
@@ -33,7 +33,7 @@
 
 <div id="commentModal" class="modal">
    <div class="modal-content">
-      <span class="close">&times;</span>
+      <span id="closeComment">&times;</span>
       <div class="modavel-body">
          <h2 id="titlePopUp">{{this.title}}</h2>
          <h2 id="hrefPopUp" href={{this.href}}>{{this.href}}</h2> 
@@ -46,7 +46,7 @@
 
 <div id="readCommentsModal" class="modal">
    <div class="modal-content">
-      <span class="close">&times;</span>
+      <span id="closeRead">&times;</span>
       <div class="modavel-body">
          <h3 id="commentPopUp">{{this.comment}}</h3>
          
@@ -67,73 +67,77 @@ $("#scrape").on("click",function(event){
       method: "GET"
    }).then(function (data){
       console.log(data);
-     
+      location.reload(); 
    });
 });
 
 
 
-$("#saveArticle").on("click", function(event) {
+$(".saveArticle").on("click", function(event) {
    event.preventDefault();
    
    $.ajax({
       url: "/articles/saveArticle/:id",
       method: "POST",
-      data: {
-         title:  title.id, 
-         summary: summary.id,    
-         href: href.id
-      }
+      //data: {
+         //title:  title.id, 
+         //summary: summary.id,    
+         //href: href.id
+      //}
+       
    }).then(function(){
       $("#saveModal").show();
    });
 
-   $("span").on("click", function(event){
+   $("#closeArticle").on("click", function(event){
       $("#saveModal").hide();
    });
 });
 
 
+var id;
 
-$("#commentOn").on("click", function(event){
+$(".submit").on("click", function(event){
+   var newComment = $("#commentText").val();
+   console.log(newComment);
+
+   $.ajax({
+      url: "/articles/saveComment/"+id,
+      method: "POST",
+      data: {
+         comment: newComment
+      }
+   }).then(function(response){
+      console.log(response);
+      
+   })
+});
+
+
+$(".commentOn").on("click", function(event){
    event.preventDefault();
+   id = $(this).attr('data-id')
+   console.log($(this).attr('data-id'))
    
    $("#commentModal").show();
 
-   $(".submit").on("click", function(event){
-      var newComment = $("#commentText").val();
-
-      $.ajax({
-         url: "/articles/saveComment/:id",
-         method: "POST",
-         data: {
-            comment: newComment
-         }
-      }).then(function(){
-         ///
-         
-      })
-   })
-   
-   $("span").on("click", function(event){
-         $("#commentModal").hide();
-   });
+   $("#closeComment").on("click", function(event){
+      $("#commentModal").hide();
+});
 });
 
-$("#readComments").on("click", function(event){
+$(".readComments").on("click", function(event){
    $("#readCommentsModal").show();
 
    $.ajax({
       url: "/articles/readComment/:id",
-      method: "GET",
-      data: {
-         comment: comment.id
-      }
+      method: "GET"
    }).then(function(data){
-      //display comments to window
+
+      $("#commentPopUp").text(data);
    })
    
-   $("span").on("click", function(event){
+   $("#closeRead").on("click", function(event){
          $("#readCommentsModal").hide();
    });
 });

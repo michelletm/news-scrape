@@ -8,7 +8,7 @@ const Comment = require("../models/Comment")
 exports.all = async function (req, res) {
    let articles
    try {
-      articles = await Article.find({}).sort({date: -1});
+      articles = await Article.find().sort( [['_id', -1]] );
       console.log(articles)
       res.render("index", { articles: articles });
       console.log(articles.length)
@@ -26,7 +26,8 @@ exports.saveArticle = async function (req, res) {
          title: article.title,
          summary: article.summary,
          href: article.href
-      })
+      });
+      console.log(savedArticle);
       await savedArticle.save()
       res.json(savedArticle);
    } catch (e) {
@@ -36,15 +37,13 @@ exports.saveArticle = async function (req, res) {
 }
 
 exports.saveComment = async function (req, res) {
-   let comment
+   console.log(req.body)
+   console.log(req.params)
+
    try {
-      comment = await Article.findOne({ _id: req.params.id })
-      const savedComment = new Comment({
-         title: comment.title,
-         comment: comment.body
-      })
-      await savedComment.save()
-      res.json(savedComment);
+      const comment = await Article.findByIdAndUpdate(req.params.id, { "$push": {comments: req.body.comment}} )
+      console.log(comment)
+      res.send('ok')
    } catch (e) {
       res.send(e);
    }
@@ -54,9 +53,9 @@ exports.saveComment = async function (req, res) {
 exports.readComment = async function ( req, res){
    let comments
    try {
-      comments = await Comment.find();
-      res.render("index", { comment: comment});
-      console.log(comment.length);
+      comments = await Article.findById(req.params.id);
+      res.render("index", {comments});
+      console.log(comments.length);
    } catch (e) {
       res.send(e)
    } 
