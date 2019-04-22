@@ -33,7 +33,7 @@ router.get('/index', function(req, res) {
 
 
 
-router.get("/")
+// router.get("/")
 
 //       let articleResult = {article: dbArticle};
 //       res.render("articles/all", articleResult)

@@ -16,7 +16,13 @@ var ArticleSchema = new Schema({
   href: {
     type: String,
     required: true
+  },
+
+  date: {
+    type : Date, 
+    default: Date.now 
   }
+
 
 });
 

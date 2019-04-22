@@ -8,7 +8,8 @@ const Comment = require("../models/Comment")
 exports.all = async function (req, res) {
    let articles
    try {
-      articles = await Article.find();
+      articles = await Article.find({}).sort({date: -1});
+      console.log(articles)
       res.render("index", { articles: articles });
       console.log(articles.length)
    } catch (e) {
@@ -66,6 +67,7 @@ exports.scrapeArticles = async function (req, res) {
    try {
       var response = await axios.get("https://www.nytimes.com/section/us");
    } catch (e) {
+      console.log("error",e)
       res.send(e)
       return
    }

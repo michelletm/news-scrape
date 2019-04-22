@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 var databaseUrl = "nytscraper_db";
-var collections = ["Article", "Comment"];
+var collections = ["Article", "Comment", "SavedArticles"];
 
 var indexRouter = require('./routes/index');
 var articlesRouter = require('./routes/articles');
@@ -56,9 +56,9 @@ app.get("/test", async function(req, res){
 
 })
 
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+// app.use(function(req, res, next) {
+//   next(createError(404));
+// });
 
 // Retrieve data from the db
 app.get("/all", function(req, res) {
