@@ -36,9 +36,9 @@ db.on("error", function(error) {
 });
 
 // Main route (simple Hello World Message)
-app.get("/", function(req, res) {
-  res.send("Hello World");
-});
+
+  
+
 
 app.use('/', indexRouter);
 app.use('/articles', articlesRouter);

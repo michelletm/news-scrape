@@ -1,7 +1,8 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
-var Article = require("../models/Article")
-var SavedArticles = require("../models/SavedArticles")
+const Article = require("../models/Article")
+const SavedArticles = require("../models/SavedArticles")
+const Comment = require("../models/Comment")
 
 
 exports.all = async function (req, res) {
@@ -31,6 +32,33 @@ exports.saveArticle = async function (req, res) {
       res.send(e);
    }
 
+}
+
+exports.saveComment = async function (req, res) {
+   let comment
+   try {
+      comment = await Article.findOne({ _id: req.params.id })
+      const savedComment = new Comment({
+         title: comment.title,
+         comment: comment.body
+      })
+      await savedComment.save()
+      res.json(savedComment);
+   } catch (e) {
+      res.send(e);
+   }
+
+}
+
+exports.readComment = async function ( req, res){
+   let comments
+   try {
+      comments = await Comment.find();
+      res.render("index", { comment: comment});
+      console.log(comment.length);
+   } catch (e) {
+      res.send(e)
+   } 
 }
 
 

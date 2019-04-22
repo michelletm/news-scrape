@@ -6,6 +6,8 @@
    </div>
 </header> --}}
 
+<button id="scrape">Scrape Articles</button><br><br>
+
 
 <div id="articleBox">
    <div>
@@ -13,7 +15,8 @@
   <p>{{@index}}. <b>{{this.title}}</b> {{this._id}}</p>
    <button class="save{{this._id}}" id="saveArticle">Save This Article</button>
   {{!-- <a href="/articles/saveArticle/{{this._id}}">Save This Article</a><br><br><br> --}}
-  <button class="commentOn{{this._id}}" id="commentOn">Comment</button><br><br>
+  <button class="commentOn{{this._id}}" id="commentOn">Comment</button>
+  <button class="readComments{{this._id}}" id="readComments">ReadComments</button><br><br>
 {{/each}}
 </div>
 
@@ -41,38 +44,95 @@
    </div>
 </div>
 
+<div id="readCommentsModal" class="modal">
+   <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="modavel-body">
+         <h2 id="commentPopUp">{{this.comment}}</h2>
+         
+      </div>
+   </div>
+</div>
+
    
 </div>
 
 <script>
 
+$("#scrape").on("click",function(event){
+   event.preventDefault();
+   
+   $.ajax({
+      url: "/scrape",
+      method: "GET"
+   }).then(function (data){
+      console.log(data);
+      location.reload();
+   });
+});
 
 
 
-$("#saveArticle").on("click", function(event){
-       $("#saveModal").show();
+$("#saveArticle").on("click", function(event) {
+   event.preventDefault();
+   
+   $.ajax({
+      url: "/saveArticle/:id",
+      method: "POST",
+      data: {
+         title:  title.id, 
+         summary: summary.id,    
+         href: href.id
+      }
+   }).then(function(){
+      $("#saveModal").show();
+   });
 
-       $("span").on("click", function(event){
-         $("#saveModal").hide();
+   $("span").on("click", function(event){
+      $("#saveModal").hide();
    });
 });
 
 
 
 $("#commentOn").on("click", function(event){
+   event.preventDefault();
+   
    $("#commentModal").show();
 
    $(".submit").on("click", function(event){
-      $("#commentText").val()
+      var newComment = $("#commentText").val();
+
+      $.ajax({
+         url: "/saveComment/:id",
+         method: "POST",
+         data: {
+            comment: newComment
+         }
+      })
    })
    
    $("span").on("click", function(event){
          $("#commentModal").hide();
    });
 });
+
+$("#readComments").on("click", function(event){
+   $("#readCommentsModal").show();
+
+   $.ajax({
+      url: "/readComment/:id",
+      method: "GET",
+      data: {
+         comment: comment.id
+      }
+   }).then(function({
+      //display comments to window
+   })
    
-
+   $("span").on("click", function(event){
+         $("#readCommentsModal").hide();
+   });
+});
    
-
-
 </script>
