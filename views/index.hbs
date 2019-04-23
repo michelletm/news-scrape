@@ -75,17 +75,14 @@ $("#scrape").on("click",function(event){
 
 $(".saveArticle").on("click", function(event) {
    event.preventDefault();
+   newSavedArticle = ($(this).attr('data-id'));
+   console.log(newSavedArticle)
    
    $.ajax({
-      url: "/articles/saveArticle/:id",
-      method: "POST",
-      //data: {
-         //title:  title.id, 
-         //summary: summary.id,    
-         //href: href.id
-      //}
-       
-   }).then(function(){
+      url: "/articles/saveArticle/" + newSavedArticle,
+      method: "POST"    
+   }).then(function(response){
+      console.log(response)
       $("#saveModal").show();
    });
 

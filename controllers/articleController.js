@@ -20,17 +20,18 @@ exports.all = async function (req, res) {
 
 exports.saveArticle = async function (req, res) {
    let article
+   console.log(req.params)
+   //res.send("ok saveArticle")
    try {
-      article = await Article.findOne({ _id: req.params.id })
+      article = await Article.findById(req.params.id)
       const savedArticle = new SavedArticles({
          title: article.title,
          summary: article.summary,
          href: article.href
       });
-      console.log(savedArticle);
-      await savedArticle.save()
-      res.json(savedArticle);
-   } catch (e) {
+      const savedArtResult = await savedArticle.save()
+      res.json(savedArtResult);
+   }catch (e) {
       res.send(e);
    }
 
