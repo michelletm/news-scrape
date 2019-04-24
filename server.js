@@ -22,7 +22,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 var databaseUrl = "nytscraper_db";
-var collections = ["Article", "Comment", "SavedArticles"];
+var collections = ["Article", "SavedArticles"];
+
 
 var indexRouter = require('./routes/index');
 var articlesRouter = require('./routes/articles');

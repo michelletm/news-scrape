@@ -19,8 +19,8 @@ var ArticleSchema = new Schema({
   },
 
   comments: {
-    type: [String],
-    default: undefined
+    type: [String]
+    //default: undefined
   },
 
   date: {

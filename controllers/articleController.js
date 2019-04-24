@@ -34,7 +34,6 @@ exports.saveArticle = async function (req, res) {
    }catch (e) {
       res.send(e);
    }
-
 }
 
 exports.saveComment = async function (req, res) {
@@ -48,14 +47,13 @@ exports.saveComment = async function (req, res) {
    } catch (e) {
       res.send(e);
    }
-
 }
 
-exports.readComment = async function ( req, res){
+exports.readComment = async function (req, res){
    let comments
    try {
       comments = await Article.findById(req.params.id);
-      res.render("index", {comments});
+      res.json(comments);
       console.log(comments.length);
    } catch (e) {
       res.send(e)
